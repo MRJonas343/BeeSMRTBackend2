@@ -31,15 +31,20 @@ const multerUpload = multer({
 const multerMiddleware = (req: Request, res: Response, next: NextFunction) => {
 	multerUpload(req, res, (err) => {
 		if (err instanceof multer.MulterError) {
-			console.log("Multer error: ", err)
-			res.status(400).send("Multer error")
-		} else if (err) {
-			console.log("Error: ", err)
-			res.status(400).send("Error")
-		} else {
-			next()
+			console.log(err)
+			res.status(400)
+			res.send("A Multer error occurred when uploading.")
+			return
 		}
+
+		if (err) {
+			console.log(err)
+			res.status(400)
+			res.send("An unknown error occurred when uploading.")
+			return
+		}
+
+		next()
 	})
 }
-
 export { multerMiddleware }
