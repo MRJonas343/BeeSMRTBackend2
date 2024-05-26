@@ -8,7 +8,4 @@ export interface createUser {
 	nickName: string
 	email: string
 	password: string
-	profileImg: string
-	englishLevel: string
-	beeLevel: string
 }

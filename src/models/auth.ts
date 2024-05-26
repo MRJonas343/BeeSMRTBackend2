@@ -20,16 +20,8 @@ const registerUser = async (authUser: createUser) => {
 		const hashPassword = await encrypt(authUser.password)
 
 		const [result2, fields2] = await pool.query<ResultSetHeader>(
-			"INSERT INTO normalUserInfo (fullName, nickName, email, password, profileImg, englishLevel, beeLevel) VALUES (?, ?, ?, ?, ?, ?, ?)",
-			[
-				authUser.fullName,
-				authUser.nickName,
-				authUser.email,
-				hashPassword,
-				authUser.profileImg,
-				authUser.englishLevel,
-				authUser.beeLevel,
-			],
+			"INSERT INTO normalUserInfo (fullName, nickName, email, password) VALUES (?, ?, ?, ?)",
+			[authUser.fullName, authUser.nickName, authUser.email, hashPassword],
 		)
 
 		//*Check if the user was created
@@ -40,8 +32,6 @@ const registerUser = async (authUser: createUser) => {
 	} catch (error) {
 		console.log(error)
 	}
-
-	//encriptar contraseña
 }
 
 const loginUser = async ({ email, password }: Auth) => {
@@ -64,12 +54,9 @@ const loginUser = async ({ email, password }: Auth) => {
 
 		if (isAuthorized) {
 			const data = {
-				name: result[0].fullName,
+				fullName: result[0].fullName,
 				nickName: result[0].nickName,
 				email: result[0].email,
-				profileImg: result[0].profileImg,
-				englishLevel: result[0].englishLevel,
-				beeLevel: result[0].beeLevel,
 				token,
 			}
 			return data

@@ -7,7 +7,28 @@ const MemoryGame1vs1Controller = async (req: Request, res: Response) => {
 		const englishLevel = String(req.headers.englishlevel)
 		console.log(englishLevel)
 		const data = await getMemoryGameItems1vs1(englishLevel)
-		res.send(data)
+
+		if (!data) {
+			res.send("No data found")
+			res.status(404)
+			return
+		}
+
+		//*Mapiar los resultados
+		const dataFormated = data.map((result) => {
+			return {
+				src: result.imgSrc,
+				matched: false,
+				question: result.question,
+				correctAnswer: result.correctAnswer,
+				incorrectAnswers: [
+					result.incorrectAnswer1,
+					result.incorrectAnswer2,
+					result.incorrectAnswer3,
+				],
+			}
+		})
+		res.send(dataFormated)
 	} catch (error) {
 		handlerHttp(res, "Error_GET_BLOG")
 	}

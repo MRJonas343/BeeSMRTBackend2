@@ -4,23 +4,12 @@ import { handlerHttp } from "../utils/errorHandler"
 
 const registerController = async (req: Request, res: Response) => {
 	try {
-		const {
-			fullName,
-			nickName,
-			email,
-			password,
-			profileImg,
-			englishLevel,
-			beeLevel,
-		} = req.body
+		const { fullName, nickName, email, password } = req.body
 		const responseUser = await registerUser({
 			fullName,
 			nickName,
 			email,
 			password,
-			profileImg,
-			englishLevel,
-			beeLevel,
 		})
 		res.json(responseUser)
 	} catch (error) {
@@ -37,11 +26,13 @@ const loginController = async (req: Request, res: Response) => {
 		if (responseUser === "The user does not exist") {
 			res.status(404)
 			res.json("The user does not exist")
+			return
 		}
 
 		if (responseUser === "Wrong password") {
 			res.status(401)
 			res.json("Wrong password")
+			return
 		}
 
 		if (responseUser) {

@@ -1,4 +1,4 @@
-import { sign, verify } from "jsonwebtoken"
+import { sign, verify, TokenExpiredError } from "jsonwebtoken"
 import "dotenv/config"
 
 const JWT_SECRET = process.env.JWT_SECRET
@@ -19,7 +19,10 @@ const verifyToken = async (token: string) => {
 		const isOk = verify(token, JWT_SECRET)
 		return isOk
 	} catch (e) {
-		console.log("Error verifying token")
+		if (e instanceof TokenExpiredError) {
+			return "expired"
+		}
+		return false
 	}
 }
 
