@@ -1,23 +1,17 @@
-// src/controllers/getMemoryGameLevels.controller.ts
 import { pool } from "../config/connectionMySQL"
 import { RowDataPacket } from "mysql2"
 
-
 const getMemoryGameLevelsModels = async (Game: string) => {
-
-  try {
+	try {
 		const [result, fields] = await pool.query<RowDataPacket[]>(
 			"SELECT EnglishLevel, LevelName, levels from Levels where Game = ?;",
-			[Game]
-		);
-		
+			[Game],
+		)
 
 		return result
 	} catch (error) {
 		console.log(error)
 	}
-
 }
 
-export {getMemoryGameLevelsModels}
-
+export { getMemoryGameLevelsModels }

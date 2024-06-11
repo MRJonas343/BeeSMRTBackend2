@@ -1,34 +1,45 @@
-// src/controllers/getMemoryGameLevels.controller.ts
-import { Request, Response, response } from "express";
-import { handlerHttp } from "../utils/errorHandler";
-import { getMemoryGameLevelsModels } from "../models/getMemoryGameLevels.model";
-
+import { Request, Response } from "express"
+import { handlerHttp } from "../utils/errorHandler"
+import { getMemoryGameLevelsModels } from "../models/getMemoryGameLevels.model"
+import { getUserTrophys } from "../models/getUserTrophys.model"
 
 const getMemoryGameLevelsController = async (req: Request, res: Response) => {
-    try {
-        console.log(req.headers)
-        const EnglishLevel = String(req.headers.englishlevel);
-        const Game = String(req.headers.game);
-        console.log(Game)
-        const Level = String(req.headers.level)
+	try {
+		const Game = String(req.headers.game)
+		const userEmail = String(req.headers.email)
 
-        if (!EnglishLevel || !Game || !Level) {
-            res.status(400).send("Missing required headers");
-            return;
-        }
+		if (!Game || !userEmail) {
+			res.status(400).send("Missing required headers")
+			return
+		}
 
-        const data = await getMemoryGameLevelsModels (Game)
-        console.log(data)
-        res.send(data)
-        res.status(200)
+		const [memoryGameLevels, userTrophys] = await Promise.all([
+			getMemoryGameLevelsModels(Game),
+			getUserTrophys(userEmail, Game),
+		])
 
-        
-        
-    } catch (error) {
-        console.error(error);
-        handlerHttp(res, "Error_GET_MEMORY_GAME_LEVELS");
-    }
-};
+		if (!memoryGameLevels) {
+			res.status(404).send("No levels found")
+			return
+		}
 
+		const data = memoryGameLevels.map((level) => {
+			const { EnglishLevel, LevelName, levels: Level } = level
 
-export { getMemoryGameLevelsController };
+			//*Check if the user has already played the level
+			const userTrophy = userTrophys.find((trophy) => trophy.Level === Level)
+
+			//* If the user hasn't played the level, the Trophys will be 0
+			const Trophys = userTrophy ? userTrophy.Trophys : 0
+
+			return { EnglishLevel, LevelName, Level, Trophys }
+		})
+
+		res.status(200).send(data)
+	} catch (error) {
+		console.error(error)
+		handlerHttp(res, "Error_GET_MEMORY_GAME_LEVELS")
+	}
+}
+
+export { getMemoryGameLevelsController }

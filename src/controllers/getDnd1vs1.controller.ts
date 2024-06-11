@@ -13,31 +13,4 @@ const getDndItemsSingleModeController = async (req: Request, res: Response) => {
 	}
 }
 
-// const createItem = (req: Request, res: Response) => {
-// 	try {
-// 		res.send(req.body)
-
-// 		console.log(req.body)
-// 	} catch (error) {
-// 		handlerHttp(res, "Error_CREATE_ITEM")
-// 		console.log(error)
-// 	}
-// }
-
-// const updateItem = (req: Request, res: Response) => {
-// 	try {
-// 		res.send("UPDATE_ITEM")
-// 	} catch (error) {
-// 		handlerHttp(res, "Error_UPDATE_ITEM")
-// 	}
-// }
-
-// const deleteItem = (req: Request, res: Response) => {
-// 	try {
-// 		res.send("DELETE_ITEM")
-// 	} catch (error) {
-// 		handlerHttp(res, "Error_DELETE_ITEM")
-// 	}
-// }
-
 export { getDndItemsSingleModeController }

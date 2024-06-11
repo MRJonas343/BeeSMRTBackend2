@@ -1,11 +1,8 @@
+import { Router } from "express"
+import { getMemoryGameLevelsController } from "../controllers/getMemoryGameLevels.controller"
 
-import { Router } from 'express';
-import { getMemoryGameLevelsController } from '../controllers/getMemoryGameLevels.controller';
+const router = Router()
 
-const router = Router();
+router.get("/", getMemoryGameLevelsController)
 
-router.get('/', getMemoryGameLevelsController);
-
-export { router };
-
-
+export { router }

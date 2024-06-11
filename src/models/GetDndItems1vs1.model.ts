@@ -4,7 +4,7 @@ import { RowDataPacket } from "mysql2"
 
 const getDndItemsSingleMode = async () => {
 	try {
-		const [result, fields] = await pool.query<RowDataPacket[]>(
+		const [result] = await pool.query<RowDataPacket[]>(
 			"SELECT * FROM DndGameItems",
 		)
 		return result
