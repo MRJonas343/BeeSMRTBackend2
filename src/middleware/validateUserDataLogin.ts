@@ -15,7 +15,7 @@ const validateUserDataLogin = async (
 		createUserSchema.parse(req.body)
 		next()
 	} catch (error) {
-		res.status(400)
+		res.status(406)
 		res.json(error)
 	}
 }

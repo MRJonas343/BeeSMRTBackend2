@@ -13,7 +13,7 @@ const registerUser = async (authUser: createUser) => {
 			[authUser.email],
 		)
 		if (result.length > 0) {
-			return "El usuario ya existe"
+			return "UserAlreadyExists"
 		}
 
 		//*Create the user
@@ -26,9 +26,10 @@ const registerUser = async (authUser: createUser) => {
 
 		//*Check if the user was created
 		if (result2.affectedRows === 0) {
-			return "Error al crear usuario"
+			return "ErrorCreatingUser"
 		}
-		return "Usuario creado correctamente"
+
+		return "SuccessCreatingUser"
 	} catch (error) {
 		console.log(error)
 	}
@@ -52,15 +53,22 @@ const loginUser = async ({ email, password }: Auth) => {
 
 		const token = await generateToken(String(result[0].id))
 
-		if (isAuthorized) {
-			const data = {
-				fullName: result[0].fullName,
-				nickName: result[0].nickName,
-				email: result[0].email,
-				token,
-			}
-			return data
+		if (result[0].profileImg === null) {
+			result[0].profileImg =
+				"https://pub-634c4c6c8002422595e483ed8ca88991.r2.dev/default_avatar.webp"
 		}
+
+		if (result[0].englishLevel === null) result[0].englishLevel = "A1"
+
+		const data = {
+			fullName: result[0].fullName,
+			nickName: result[0].nickName,
+			email: result[0].email,
+			profileImage: result[0].profileImg,
+			englishLevel: result[0].englishLevel,
+			token,
+		}
+		return data
 	} catch (error) {
 		console.log(error)
 	}

@@ -11,6 +11,21 @@ const registerController = async (req: Request, res: Response) => {
 			email,
 			password,
 		})
+
+		if (responseUser === "UserAlreadyExists") {
+			res.status(409)
+			res.json("UserAlreadyExists")
+			return
+		}
+
+		if (responseUser === "ErrorCreatingUser") {
+			res.status(500)
+			res.json("ErrorCreatingUser")
+			return
+		}
+
+		res.status(201)
+
 		res.json(responseUser)
 	} catch (error) {
 		handlerHttp(res, "Error_REGISTER_USER")
