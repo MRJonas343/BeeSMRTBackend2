@@ -8,7 +8,7 @@ const getMemoryGameLevelsController = async (req: Request, res: Response) => {
 		const Game = String(req.headers.game)
 		const userEmail = String(req.headers.email)
 
-		if (!Game || !userEmail) {
+		if (!Game) {
 			res.status(400).send("Missing required headers")
 			return
 		}

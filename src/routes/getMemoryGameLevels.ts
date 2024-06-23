@@ -1,9 +1,9 @@
 import { Router } from "express"
 import { getMemoryGameLevelsController } from "../controllers/getMemoryGameLevels.controller"
-import { checkJWT } from "../middleware/session"
+import { checkUserLogin } from "../middleware/checkUserLogin"
 
 const router = Router()
 
-router.get("/", checkJWT, getMemoryGameLevelsController)
+router.get("/", checkUserLogin, getMemoryGameLevelsController)
 
 export { router }
