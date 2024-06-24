@@ -1,9 +1,9 @@
 import { Router } from "express"
 import { getHangmanLevelsController } from "../controllers/getHangmanLevels.controller"
-import { checkJWT } from "../middleware/session"
+import { checkUserLogin } from "../middleware/checkUserLogin"
 
 const router = Router()
 
-router.get("/", checkJWT, getHangmanLevelsController)
+router.get("/", checkUserLogin, getHangmanLevelsController)
 
 export { router }

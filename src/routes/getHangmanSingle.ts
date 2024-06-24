@@ -1,10 +1,10 @@
 import { Router } from "express"
-import { logMiddleware } from "../middleware/log"
+import { checkUserLogin } from "../middleware/checkUserLogin"
 import { Hangman1vs1Controller } from "../controllers/getHangman1vs1.controller"
 
 const router = Router()
 
 //* Pendin añadir try catch
-router.get("/", logMiddleware, Hangman1vs1Controller)
+router.get("/", checkUserLogin, Hangman1vs1Controller)
 
 export { router }

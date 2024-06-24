@@ -6,15 +6,14 @@ interface Level extends RowDataPacket {
 	id: number
 	EnglishLevel: string
 	LevelName: string
-	Game: string
-	Level: string
+	levels: string
 }
 
-const getHangmanGameLevelsModels = async (game: string, englishLevel: string): Promise<Level[]> => {
+const getHangmanGameLevelsModels = async (game: string): Promise<Level[]> => {
 	try {
 		const [result] = await pool.query<Level[]>(
-			"SELECT * FROM Levels WHERE Game = ? AND EnglishLevel = ?",
-			[game, englishLevel],
+			"SELECT EnglishLevel, LevelName, levels FROM Levels WHERE Game = ?;",
+			[game],
 		)
 		return result
 	} catch (error) {

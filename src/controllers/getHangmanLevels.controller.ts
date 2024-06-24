@@ -3,29 +3,26 @@ import { handlerHttp } from "../utils/errorHandler"
 import { getHangmanGameLevelsModels } from "../models/getHangmanGameLevels.model"
 import { getUserTrophys } from "../models/getUserTrophys.model"
 
-const getHangmanLevelsController = async (req: Request, res: Response): Promise<void> => {
+const getHangmanLevelsController = async (
+	req: Request,
+	res: Response,
+): Promise<void> => {
 	try {
-		const Game = String(req.headers.game)
+		const Game = "HangmanGame"
 		const userEmail = String(req.headers.email)
-		const englishLevel = String(req.headers.englishlevel)
-
-		if (!Game || !userEmail || !englishLevel) {
-			res.status(400).send("Missing required headers")
-			return
-		}
 
 		const [hangmanGameLevels, userTrophys] = await Promise.all([
-			getHangmanGameLevelsModels(Game, englishLevel),
+			getHangmanGameLevelsModels(Game),
 			getUserTrophys(userEmail, Game),
 		])
 
-		if (!hangmanGameLevels || hangmanGameLevels.length === 0) {
+		if (!hangmanGameLevels) {
 			res.status(404).send("No levels found")
 			return
 		}
 
 		const data = hangmanGameLevels.map((level) => {
-			const { EnglishLevel, LevelName, Level } = level
+			const { EnglishLevel, LevelName, levels: Level } = level
 
 			const userTrophy = userTrophys.find((trophy) => trophy.Level === Level)
 
@@ -42,7 +39,3 @@ const getHangmanLevelsController = async (req: Request, res: Response): Promise<
 }
 
 export { getHangmanLevelsController }
-
-
-
-    
