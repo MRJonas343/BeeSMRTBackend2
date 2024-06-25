@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { handlerHttp } from "../utils/errorHandler"
 import { getHangmanGameLevelsModels } from "../models/getHangmanGameLevels.model"
-import { getUserTrophys } from "../models/getUserTrophys.model"
+import { getUserTrophys } from "../models/getUserTotalTrohys.model"
 
 const getHangmanLevelsController = async (
 	req: Request,

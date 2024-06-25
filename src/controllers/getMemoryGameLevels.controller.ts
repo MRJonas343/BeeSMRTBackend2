@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { handlerHttp } from "../utils/errorHandler"
 import { getMemoryGameLevelsModels } from "../models/getMemoryGameLevels.model"
-import { getUserTrophys } from "../models/getUserTrophys.model"
+import { getUserTrophys } from "../models/getUserTotalTrohys.model"
 
 const getMemoryGameLevelsController = async (req: Request, res: Response) => {
 	try {
