@@ -7,7 +7,7 @@ const updateUserData = async (
 	dataToUpdate: Record<string, any>,
 ) => {
 	try {
-		const [result] = await pool.query<RowDataPacket[]>(
+		const [result, afected] = await pool.query<RowDataPacket[]>(
 			"UPDATE normalUserInfo SET ? WHERE email = ?",
 			[dataToUpdate, email],
 		)

@@ -45,9 +45,13 @@ const updateDataController = async (req: Request, res: Response) => {
 		}
 
 		//*update everything in the database
-		await updateUserData(String(req.headers.email), dataToUpdate)
+		const result = await updateUserData(String(req.headers.email), dataToUpdate)
+		if (result === "Successfull") {
+			res.json(dataToUpdate)
+			return
+		}
 
-		res.json({ message: "Successfull" })
+		res.status(400)
 	} catch (e) {
 		res.status(400)
 		res.send("Error")
