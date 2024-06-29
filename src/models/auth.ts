@@ -55,7 +55,7 @@ const loginUser = async ({ email, password }: Auth) => {
 
 		if (result[0].profileImg === null) {
 			result[0].profileImg =
-				"https://pub-634c4c6c8002422595e483ed8ca88991.r2.dev/default_avatar.webp"
+				"https://pub-241a841ae4ea425fa274a2a6b42464d9.r2.dev/default_avatar.webp"
 		}
 
 		if (result[0].englishLevel === null) result[0].englishLevel = "A1"
