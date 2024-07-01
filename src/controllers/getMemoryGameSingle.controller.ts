@@ -5,7 +5,6 @@ import { getMemoryGameItems1vs1 } from "../models/GetMemoryGameItems1vs1.model"
 const MemoryGameSingleController = async (req: Request, res: Response) => {
 	try {
 		const englishLevel = String(req.headers.englishlevel)
-		console.log(englishLevel)
 		const data = await getMemoryGameItems1vs1(englishLevel)
 
 		if (!data) {
