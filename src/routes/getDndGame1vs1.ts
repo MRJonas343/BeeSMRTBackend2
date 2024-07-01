@@ -1,12 +1,12 @@
 import { Router } from "express"
-import { logMiddleware } from "../middleware/log"
+import { checkUserLogin } from "../middleware/checkUserLogin"
 
-import { getDndItemsSingleModeController } from "../controllers/getDnd1vs1.controller"
+import { getDragAndDrop1vs1Controller} from "../controllers/getDnd1vs1.controller"
 
 const router = Router()
 
 //* Pendin añadir try catch
-router.get("/", logMiddleware, getDndItemsSingleModeController)
+router.get("/", checkUserLogin, getDragAndDrop1vs1Controller)
 
 // router.post("/", createItem)
 

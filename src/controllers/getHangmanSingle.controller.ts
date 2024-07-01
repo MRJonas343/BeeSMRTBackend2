@@ -2,7 +2,7 @@ import { Request, Response } from "express"
 import { handlerHttp } from "../utils/errorHandler"
 import { getHangmanItems1vs1 } from "../models/GetHangmanGame1vs1.model"
 
-const Hangman1vs1Controller = async (
+const HangmanSingleController = async (
 	req: Request,
 	res: Response,
 ): Promise<void> => {
@@ -28,4 +28,4 @@ const Hangman1vs1Controller = async (
 	}
 }
 
-export { Hangman1vs1Controller }
+export { HangmanSingleController}

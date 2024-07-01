@@ -1,7 +1,7 @@
 import { pool } from "../config/connectionMySQL"
 import { RowDataPacket } from "mysql2"
 
-// Define the interface for the Level
+
 interface Level extends RowDataPacket {
 	id: number
 	EnglishLevel: string
