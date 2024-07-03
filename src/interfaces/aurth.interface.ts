@@ -9,3 +9,10 @@ export interface createUser {
 	email: string
 	password: string
 }
+
+export interface createUserAquaSprout {
+	plant: string
+	userName: string
+	email: string
+	password: string
+}
