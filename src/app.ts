@@ -16,7 +16,7 @@ app.use(
 )
 app.use(
 	cors({
-		origin: true,
+		origin: process.env.CORS_ORIGIN,
 	}),
 )
 app.use(router)
