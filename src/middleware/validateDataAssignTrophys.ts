@@ -13,7 +13,6 @@ const validateDataAssignTrophys = async (
 	next: NextFunction,
 ) => {
 	try {
-		console.log(req.body)
 		createUserSchema.parse(req.body)
 		next()
 	} catch (error) {

@@ -5,7 +5,6 @@ import { assignUserTrophys } from "../models/assignTrophys.model"
 const assignTrophysController = async (req: Request, res: Response) => {
 	try {
 		const { email, game, level } = req.body
-		console.log(req.body)
 
 		const availableTrophys: { [key: string]: number } = {
 			A1Level1: 10,
@@ -52,5 +51,3 @@ const assignTrophysController = async (req: Request, res: Response) => {
 }
 
 export { assignTrophysController }
-
-

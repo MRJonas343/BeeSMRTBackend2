@@ -20,7 +20,6 @@ const getImage = async (image: string) => {
 	try {
 		const command = new GetObjectCommand(getParams)
 		const url = await getSignedUrl(R2, command, { expiresIn: 3600 })
-		console.log(url)
 		return url
 	} catch (error) {
 		console.error("Error getting file:", error)

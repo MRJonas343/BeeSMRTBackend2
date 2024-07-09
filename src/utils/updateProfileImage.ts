@@ -4,7 +4,6 @@ import {
 	PutObjectCommand,
 	DeleteObjectCommand,
 } from "@aws-sdk/client-s3"
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import { UploadedFile } from "express-fileupload"
 import { pool } from "../config/connectionMySQL"
 import { RowDataPacket, ResultSetHeader } from "mysql2"
@@ -43,7 +42,6 @@ const UploadImg = async (file: UploadedFile, email: string) => {
 		)
 
 		if (result[0].profileImg === null) {
-			console.log("No tiene imagen")
 			await R2.send(new PutObjectCommand(uploadParams))
 			const baseURL = "https://pub-241a841ae4ea425fa274a2a6b42464d9.r2.dev"
 			const url = `${baseURL}/${uploadParams.Key}`
