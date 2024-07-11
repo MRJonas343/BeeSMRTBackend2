@@ -4,6 +4,6 @@ import { HangmanSingleController } from "../controllers/getHangmanSingle.control
 
 const router = Router()
 
-router.get("/", checkUserLogin, HangmanSingleController)
+router.get("/", HangmanSingleController)
 
 export { router }

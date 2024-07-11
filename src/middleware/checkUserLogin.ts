@@ -17,7 +17,7 @@ const checkUserLogin = async (
 
 		if (!jwtbyUser) {
 			res.status(401)
-			res.send("Unauthorized")
+			res.send({ message: "Unauthorized" })
 			return
 		}
 
@@ -25,7 +25,7 @@ const checkUserLogin = async (
 
 		if (!jwt) {
 			res.status(401)
-			res.send("Unauthorized")
+			res.send({ message: "Unauthorized" })
 			return
 		}
 
@@ -33,20 +33,20 @@ const checkUserLogin = async (
 
 		if (!isTokenValid) {
 			res.status(401)
-			res.send("Token is not valid")
+			res.send({ message: "Unauthorized" })
 			return
 		}
 
 		if (isTokenValid === "expired") {
 			res.status(498)
-			res.send("Token is expired")
+			res.send({ message: "Token expired" })
 			return
 		}
 
 		next()
 	} catch (e) {
 		res.status(401)
-		res.send("Unauthorized")
+		res.send({ message: "Unauthorized" })
 	}
 }
 

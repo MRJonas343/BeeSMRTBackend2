@@ -4,6 +4,6 @@ import { MemoryGameSingleController } from "../controllers/getMemoryGameSingle.c
 
 const router = Router()
 
-router.get("/", checkUserLogin, MemoryGameSingleController)
+router.get("/", MemoryGameSingleController)
 
 export { router }
