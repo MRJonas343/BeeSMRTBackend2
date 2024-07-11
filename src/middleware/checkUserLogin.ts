@@ -38,6 +38,7 @@ const checkUserLogin = async (
 		}
 
 		if (isTokenValid === "expired") {
+			next()
 			res.status(498)
 			res.send({ message: "Token expired" })
 			return
