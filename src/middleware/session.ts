@@ -7,7 +7,7 @@ const checkJWT = async (req: Request, res: Response, next: NextFunction) => {
 
 		if (!jwtbyUser) {
 			res.status(401)
-			res.send("Unauthorized")
+			res.send({ message: "Unauthorized" })
 			return
 		}
 
@@ -15,7 +15,7 @@ const checkJWT = async (req: Request, res: Response, next: NextFunction) => {
 
 		if (!jwt) {
 			res.status(401)
-			res.send("Unauthorized")
+			res.send({ message: "Unauthorized" })
 			return
 		}
 
@@ -23,13 +23,13 @@ const checkJWT = async (req: Request, res: Response, next: NextFunction) => {
 
 		if (!isTokenValid) {
 			res.status(401)
-			res.send("Token is not valid")
+			res.send({ message: "Unauthorized" })
 			return
 		}
 
 		if (isTokenValid === "expired") {
 			res.status(498)
-			res.send("Token is expired")
+			res.send({ message: "Token expired" })
 			return
 		}
 
