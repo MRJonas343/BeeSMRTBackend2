@@ -1,9 +1,9 @@
-import express from 'express';
-import { getLeaderBoard } from '../controllers/getLeaderBoard.controller';
-import { checkJWT } from '../middleware/session'
+import { Router } from "express"
+import { getLeaderBoard } from "../controllers/getLeaderBoard.controller"
+import { checkJWT } from "../middleware/session"
 
-const router = express.Router();
+const router = Router()
 
-router.get('/', checkJWT, getLeaderBoard);
+router.get("/", checkJWT, getLeaderBoard)
 
-export { router };
+export { router }

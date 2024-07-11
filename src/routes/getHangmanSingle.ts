@@ -4,7 +4,6 @@ import { HangmanSingleController } from "../controllers/getHangmanSingle.control
 
 const router = Router()
 
-//* Pendin añadir try catch
 router.get("/", checkUserLogin, HangmanSingleController)
 
 export { router }

@@ -4,7 +4,6 @@ import { contactMessageController } from "../controllers/contactMessage.controll
 
 const router = Router()
 
-//* Pendin añadir try catch
 router.post("/", logMiddleware, contactMessageController)
 
 export { router }

@@ -1,8 +1,8 @@
-import express from "express"
+import { Router } from "express"
 import { getDragAndDropSingleController } from "../controllers/getDragAndDropSingle.controller"
 import { checkUserLogin } from "../middleware/checkUserLogin"
 
-const router = express.Router()
+const router = Router()
 
 router.get("/", checkUserLogin, getDragAndDropSingleController)
 

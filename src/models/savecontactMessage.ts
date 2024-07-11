@@ -1,5 +1,5 @@
 import { pool } from "../config/connectionMySQL"
-import { RowDataPacket, ResultSetHeader } from "mysql2"
+import { ResultSetHeader } from "mysql2"
 import { ContactMessage } from "../interfaces/contactMessage"
 
 const saveContactMessage = async (contactMessage: ContactMessage) => {

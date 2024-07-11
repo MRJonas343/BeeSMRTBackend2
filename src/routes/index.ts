@@ -1,7 +1,5 @@
 import { Router } from "express"
-import { readSync, readdirSync } from "node:fs"
-
-
+import { readdirSync } from "node:fs"
 
 const PATH_ROUTER = `${__dirname}`
 const router = Router()
