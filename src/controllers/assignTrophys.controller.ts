@@ -37,6 +37,12 @@ const assignTrophysController = async (req: Request, res: Response) => {
 			C1Level4: 280,
 			C1Level5: 290,
 			C1Level6: 300,
+			C2Level1: 310,
+			C2Level2: 320,
+			C2Level3: 330,
+			C2Level4: 340,
+			C2Level5: 350,
+			C2Level6: 360,
 		}
 
 		const trophys = availableTrophys[level]
