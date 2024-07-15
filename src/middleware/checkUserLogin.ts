@@ -32,9 +32,7 @@ const checkUserLogin = async (
 		const isTokenValid = await verifyToken(String(jwt))
 
 		if (isTokenValid === "expired") {
-			next()
-			res.status(498)
-			res.send({ message: "Token expired" })
+			res.status(498).send({ message: "Token expired" })
 			return
 		}
 
