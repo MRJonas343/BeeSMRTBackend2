@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { getUserTotalTrophies } from "../models/getUserTrophies"
+import { getUserDashboardInfo } from "../models/getUserDashboardInfo"
 
 const userDashboardController = async (req: Request, res: Response) => {
 	try {
@@ -7,8 +7,9 @@ const userDashboardController = async (req: Request, res: Response) => {
 
 		if (!email) return res.status(400).send("Email is required")
 		//*Ask the backend for the data
-		const trophies = await getUserTotalTrophies(email)
-		res.status(200).send(trophies)
+		const data = await getUserDashboardInfo(email)
+
+		res.status(200).send(data)
 	} catch (error) {
 		res.status(500).send("Error")
 	}
