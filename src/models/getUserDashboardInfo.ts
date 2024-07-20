@@ -1,6 +1,11 @@
 import { RowDataPacket } from "mysql2"
 import { pool } from "../config/connectionMySQL"
 
+interface UserStats extends RowDataPacket {
+	TotalTrophys: number
+	GamesPlayed: number
+}
+
 const getUserDashboardInfo = async (emailUser: string) => {
 	const possibleAchievements = [
 		"FirstGame",
@@ -14,60 +19,37 @@ const getUserDashboardInfo = async (emailUser: string) => {
 		"GrandMaster",
 		"Challenger",
 	]
-	const userAchivements = []
-	try {
-		const [result] = await pool.query<RowDataPacket[]>(
-			"SELECT SUM(Trophys) AS TotalTrophys, COUNT(*) AS GamesPlayed FROM userTrophys WHERE emailUser = ?;",
-			[emailUser],
-		)
 
-		//*get the position of the user
-		const [position] = await pool.query<RowDataPacket[]>(
-			"SELECT emailUser, SUM(Trophys) AS TotalTrophys FROM userTrophys GROUP BY emailUser ORDER BY TotalTrophys DESC LIMIT 50;",
-		)
+	try {
+		const [userStatsResult, positionListResult] = await Promise.all([
+			pool.query<UserStats[]>(
+				"SELECT SUM(Trophys) AS TotalTrophys, COUNT(*) AS GamesPlayed FROM userTrophys WHERE emailUser = ?;",
+				[emailUser],
+			),
+			pool.query<RowDataPacket[]>(
+				"SELECT emailUser, SUM(Trophys) AS TotalTrophys FROM userTrophys GROUP BY emailUser ORDER BY TotalTrophys DESC LIMIT 50;",
+			),
+		])
+
+		const userStats = userStatsResult[0][0]
+		const positionList = positionListResult[0]
 
 		let userPosition = "Unclassified"
-		position.forEach((element, index) => {
+		positionList.forEach((element, index) => {
 			if (element.emailUser === emailUser) {
 				userPosition = String(index + 1)
 			}
 		})
 
-		if (result[0].GamesPlayed >= 1000) {
-			userAchivements.push(possibleAchievements[9])
-		}
-		if (result[0].GamesPlayed >= 500) {
-			userAchivements.push(possibleAchievements[8])
-		}
-		if (result[0].GamesPlayed >= 250) {
-			userAchivements.push(possibleAchievements[7])
-		}
-		if (result[0].GamesPlayed >= 100) {
-			userAchivements.push(possibleAchievements[6])
-		}
-		if (result[0].GamesPlayed >= 50) {
-			userAchivements.push(possibleAchievements[5])
-		}
-		if (result[0].GamesPlayed >= 25) {
-			userAchivements.push(possibleAchievements[4])
-		}
-		if (result[0].GamesPlayed >= 10) {
-			userAchivements.push(possibleAchievements[3])
-		}
-		if (result[0].GamesPlayed >= 5) {
-			userAchivements.push(possibleAchievements[2])
-		}
-		if (result[0].GamesPlayed >= 3) {
-			userAchivements.push(possibleAchievements[1])
-		}
-		if (result[0].GamesPlayed >= 1) {
-			userAchivements.push(possibleAchievements[0])
-		}
+		const userAchievements = possibleAchievements.filter((_, index) => {
+			const thresholds = [1, 3, 5, 10, 25, 50, 100, 250, 500, 1000]
+			return userStats.GamesPlayed >= thresholds[index]
+		})
 
-		return { ...result[0], userPosition, userAchivements }
+		return { ...userStats, userPosition, userAchievements }
 	} catch (error) {
-		console.log(error)
-		throw error
+		console.error("Error fetching user dashboard info:", error)
+		return null
 	}
 }
 

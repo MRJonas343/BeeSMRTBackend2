@@ -9,6 +9,8 @@ const userDashboardController = async (req: Request, res: Response) => {
 		//*Ask the backend for the data
 		const data = await getUserDashboardInfo(email)
 
+		if (!data) return res.status(404).send("User not found")
+
 		res.status(200).send(data)
 	} catch (error) {
 		res.status(500).send("Error")
